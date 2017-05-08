@@ -1,31 +1,38 @@
 var BlinkingMarker = function(options) {
+	
 	this.message = options.message
 	this.marker = new ROS3D.Marker(options)
-	this.color = "green"
+	this.visible = true
 }
 
 
-BlinkingMarker.prototype.blink = function() {
+BlinkingMarker.prototype.blink = function(options={}) {
+	var interval = 20; // this is the default
+	if(options.interval) {
+		interval = options.interval
+	}
+
 	var updateObject = function() {
-    console.log("blinking")
-    var message = this.message
-    console.log("color: ", color)
-    if(this.color == "green") {
-      this.color = "white"
-      message.color = {r: 1,g: 1, b: 1, a: 1}
+   
+    if(this.visible === true) {
+      this.visible = false
+      this.message.color = {r: 1,g: 1, b: 1, a: 1}
     } else {
-      this.color = "green"
-      message.color = {r:0 ,g: 1, b: 0, a: 1}
+      this.visible = true
+      this.message.color = {r:0 ,g: 1, b: 0, a: 1}
     }
 
-    marker.marker.update(message)
+    this.marker.update(this.message)
   }
 
-  var timer = setInterval(updateObject, 20)  
+  // This is the internal timer to stop blinking
+  this.__timer = setInterval(updateObject.bind(this), interval)  
   
 }
 
-// ROS3D.Marker.prototype.update = function(message) {
+BlinkingMarker.prototype.stopBlinking = function() {
+	clearInterval(this.__timer)
 
-// }
+}
+
 

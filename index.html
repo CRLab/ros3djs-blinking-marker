@@ -77,23 +77,32 @@
 
     viewer.addObject(marker.marker)
    
+    marker.blink()
 
-    var updateObject = function() {
-      console.log("blinking")
+    
+    
+    setTimeout(function(){ 
+      console.log("About to stop blinking")
+      marker.stopBlinking()
+    }, 5000);
+
+    
+    // var updateObject = function() {
+    //   console.log("blinking")
       
-      console.log("color: ", color)
-      if(color == "green") {
-        color = "white"
-        message.color = {r: 1,g: 1, b: 1, a: 1}
-      } else {
-        color = "green"
-        message.color = {r:0 ,g: 1, b: 0, a: 1}
-      }
+    //   console.log("color: ", color)
+    //   if(color == "green") {
+    //     color = "white"
+    //     message.color = {r: 1,g: 1, b: 1, a: 1}
+    //   } else {
+    //     color = "green"
+    //     message.color = {r:0 ,g: 1, b: 0, a: 1}
+    //   }
 
-      marker.marker.update(message)
-    }
+    //   marker.marker.update(message)
+    // }
 
-    var timer = setInterval(updateObject, 20)  
+    // var timer = setInterval(updateObject, 20)  
     
   
    
